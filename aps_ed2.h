@@ -6,6 +6,7 @@
 typedef struct palavra{
     char palavra[50];
     char palavra_ordenada[50];
+    long int cod_hash;
 }Palavra;
 
 void ordena_palavra(char * palavra, int n){
@@ -21,4 +22,15 @@ void ordena_palavra(char * palavra, int n){
             }
         }
     }
+}
+
+int func_hash(char * palavra, int n){
+    int i;
+    long int cod_hash=0;
+    
+    for(i=0; i<n; i++){
+        cod_hash=cod_hash+(palavra[i]*(i+1)*4);
+    }
+
+return cod_hash;
 }
