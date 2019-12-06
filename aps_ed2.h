@@ -6,11 +6,17 @@
 typedef struct palavra{
     char palavra[50];
     char palavra_ordenada[50];
-    long int cod_hash;
+    long int chave;
 }Palavra;
 
+typedef struct lista_palavras{
+    Palavra vetor_palavra[100];
+    long int chave;
+    int cont=0;
+}Lista_Palavras;
+
 void ordena_palavra(char * palavra, int n){
-    char aux;
+    unsigned char aux;
     int i, j;
 
     for(i=0; i<n; i++){
@@ -33,4 +39,9 @@ int func_hash(char * palavra, int n){
     }
 
 return cod_hash;
+}
+
+Palavra * criar_palavra(){
+    Palavra * novo=(Palavra*)malloc(sizeof(Palavra));
+return novo;    
 }

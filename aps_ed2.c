@@ -11,44 +11,39 @@ int main(int argc, char *argv[ ]){
     ordena_palavra(argv[1], strlen(argv[1]));
     printf("\n Palavra ordenada:%s", argv[1]);
 
-
-    /*FILE *fp1 = fopen ("br.txt", "r");
-    if (fp1 == NULL) {
-        printf ("Houve um erro ao abrir o arquivo.\n");
-        return 1;
-    }
-    char palavra_num[50];
-    while(feof(fp1)==0){
-        fgets(palavra_num, 50, fp1);
-        cont++;
-    }
-
-    printf("\nnumero de palavras:%d", cont);
-
-    fclose(fp1);*/ 
-
     FILE *fp = fopen ("br.txt", "r");
     if (fp == NULL) {
         printf ("Houve um erro ao abrir o arquivo.\n");
         return 1;
     }
 
-    Palavra a[30];
+    Palavra * aux;
 
-    for(i=0; i<30; i++){
-        fgets(a[i].palavra, 50, fp);
-        a[i].palavra[strlen(a[i].palavra)-1] = 0;
-        printf("\nPalavra %s adicionada ao dicionario!", a[i].palavra);
-        strcpy(a[i].palavra_ordenada, a[i].palavra);
-        ordena_palavra(a[i].palavra_ordenada, strlen(a[i].palavra_ordenada));
-        printf("\nPalavra do arquivo ordenada:%s", a[i].palavra_ordenada);
-        a[i].cod_hash=func_hash(a[i].palavra_ordenada, strlen(a[i].palavra_ordenada));
-        printf("\nCodigo Hash da palavra %s: %d\n", a[i].palavra, a[i].cod_hash);
+    Lista_Palavras * dicionario=(Lista_Palavras*)calloc(100000, sizeof(Lista_Palavras));
+
+    while(feof(fp)==0){
+        aux=criar_palavra();
+        fgets(aux->palavra, 50, fp);
+        aux->palavra[strlen(aux->palavra)-1] = 0;
+        strcpy(aux->palavra_ordenada, aux->palavra);
+        ordena_palavra(aux->palavra_ordenada, strlen(aux->palavra_ordenada));
+        aux->chave=func_hash(aux->palavra_ordenada, strlen(aux->palavra_ordenada));
+
+        if(dicionario->cont==0){
+            dicionario[aux->chave].chave=aux->chave;
+            strcpy(dicionario[aux->chave].palavra,aux->palavra);
+            strcpy(dicionario[aux->chave].palavra_ordenada,aux->palavra_ordenada);
+        }
+        else if(dicionario->cont<100){
+            dicionario[aux->chave].chave=aux->chave;
+            strcpy(dicionario[aux->chave].palavra,aux->palavra);
+            strcpy(dicionario[aux->chave].palavra_ordenada,aux->palavra_ordenada);
+        }
+        printf("\nPalavra '%s' adicionada ao dicionario!", dicionario[aux->chave].palavra);
+        printf("\nPalavra do arquivo ordenada:%s", dicionario[aux->chave].palavra_ordenada);
+        printf("\nCodigo Hash da palavra %s: %d\n", dicionario[aux->chave].palavra, dicionario[aux->chave].chave);
     }
 
-    //while(feof(fp)){
-
-    //}
 
     fclose(fp);
 
