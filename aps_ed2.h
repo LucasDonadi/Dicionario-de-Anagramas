@@ -12,11 +12,11 @@ typedef struct palavra{
 typedef struct lista_palavras{
     Palavra vetor_palavra[100];
     long int chave;
-    int cont=0;
+    int cont;
 }Lista_Palavras;
 
 void ordena_palavra(char * palavra, int n){
-    unsigned char aux;
+    char aux;
     int i, j;
 
     for(i=0; i<n; i++){
@@ -30,12 +30,12 @@ void ordena_palavra(char * palavra, int n){
     }
 }
 
-int func_hash(char * palavra, int n){
+long int func_hash(char * palavra, int n){
     int i;
     long int cod_hash=0;
     
     for(i=0; i<n; i++){
-        cod_hash=cod_hash+(palavra[i]*(i+1)*4);
+        cod_hash=cod_hash+(palavra[i]*(i+1)*(i+1));
     }
 
 return cod_hash;
@@ -44,4 +44,14 @@ return cod_hash;
 Palavra * criar_palavra(){
     Palavra * novo=(Palavra*)malloc(sizeof(Palavra));
 return novo;    
+}
+
+char * tolower_string(char * str, int n){
+    int i;
+    
+    for(i=0; i<n; i++){
+        str[i]=tolower(str[i]);
+    }
+
+return str;
 }
