@@ -29,16 +29,17 @@ void ordena_palavra(char * palavra, int n){
         }
     }
 }
-
-long int func_hash(char * palavra, int n){
+//(cod_hash/3)+(palavra[i]*(i+1)*(i+3));
+long int criar_chave(char * palavra, int n){
     int i;
-    long int cod_hash=0;
+    long int chave=0;
     
     for(i=0; i<n; i++){
-        cod_hash=cod_hash+(palavra[i]*(i+1)*(i+1));
+        chave=chave+(palavra[i]*(i+1)*(i+3));
+        chave=chave/3;
     }
 
-return cod_hash;
+return chave;
 }
 
 Palavra * criar_palavra(){
@@ -46,7 +47,7 @@ Palavra * criar_palavra(){
 return novo;    
 }
 
-char * tolower_string(char * str, int n){
+char * tolower_string(char * str, int n){ //funcao para converter a string inteira para minusculo usando a funcao tolower para cada posicao da string
     int i;
     
     for(i=0; i<n; i++){
